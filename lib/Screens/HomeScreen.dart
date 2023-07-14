@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List notes = [];
 
   Future readdata() async {
-    List<Map> responce = await sqlDB.readData("SELECT * FROM notes");
+    List<Map> responce = await sqlDB.read(" notes");
     notes.addAll(responce);
     isloading = false;
     if (this.mounted) {
@@ -61,8 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 IconButton(
                                   onPressed: () async {
-                                    int response = await sqlDB.deleteData(
-                                        'DELETE FROM notes WHERE id = ${notes[i]['id']}  ');
+                                    // int response = await sqlDB.deleteData(
+                                    //     'DELETE FROM notes WHERE id = ${notes[i]['id']}  ');
+                                    int response = await sqlDB.delete(
+                                        'notes', "id = ${notes[i]['id']}");
+                                    print('data deleted');
                                     if (response > 0) {
                                       notes.removeWhere((element) =>
                                           element['id'] == notes[i]['id']);

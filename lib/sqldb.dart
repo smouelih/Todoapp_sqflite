@@ -66,4 +66,34 @@ class SqlDb {
     String path = join(databasepath, 'wael.db');
     await deleteDatabase(path);
   }
+
+  read(String table) async {
+    Database? mydb = await db;
+    List<Map> response = await mydb!.query(table);
+    return response;
+  }
+
+  insert(String table, Map<String, Object?> values) async {
+    Database? mydb = await db;
+    int response = await mydb!.insert(table, values);
+    return response;
+  }
+
+  update(String table, Map<String, Object?> values, String? mywhere) async {
+    Database? mydb = await db;
+    int response = await mydb!.update(table, values, where: mywhere);
+    return response;
+  }
+
+  delete(String table, String? mywhere) async {
+    Database? mydb = await db;
+    int response = await mydb!.delete(table, where: mywhere);
+    return response;
+  }
+
+  mydelete() async {
+    String databasepath = await getDatabasesPath();
+    String path = join(databasepath, 'wael.db');
+    await deleteDatabase(path);
+  }
 }
